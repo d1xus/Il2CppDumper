@@ -1,0 +1,15 @@
+name: Build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0'
+      - run: dotnet publish Il2CppDumper/Il2CppDumper.csproj -c Release -r linux-x64 --self-contained true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Il2CppDumper-linux
+          path: Il2CppDumper/bin/Release/net8.0/linux-x64/publish/
