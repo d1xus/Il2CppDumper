@@ -1,0 +1,15 @@
+name: Build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0'
+      - run: dotnet publish Il2CppDumper/Il2CppDumper.csproj -f net8.0 -c Release -r linux-arm64 --self-contained true /p:PublishSingleFile=true /p:EnableCompressionInSingleFile=true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Il2CppDumper-termux-arm64
+          path: Il2CppDumper/bin/Release/net8.0/linux-arm64/publish/
